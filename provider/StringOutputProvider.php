@@ -15,26 +15,18 @@ class StringOutputProvider extends AbstractOutputProvider {
     /**
      * Constructor
      * 
-     * @param string $ffmpegBinary path to ffmpeg executable
-     * @param boolean $persistent persistent functionality on/off
+     * @param string $output parsable output
      */
-    public function __construct($ffmpegBinary = 'ffmpeg', $persistent = false) {
-        $this->_output = '';
-        parent::__construct($ffmpegBinary, $persistent);
+    public function __construct($output) {
+        $this->setOutput($output);
     }
-	
+    
     /**
-     * Getting parsable output from ffmpeg binary
+     * Getting parsable output
      * 
      * @return string
      */    
     public function getOutput() {
-        
-        // Persistent opening
-        if ($this->persistent == true && array_key_exists(get_class($this).$this->binary.$this->movieFile, self::$persistentBuffer)) {
-            return self::$persistentBuffer[get_class($this).$this->binary.$this->movieFile];
-        } 
-
         return $this->_output;
     }
 
@@ -44,13 +36,7 @@ class StringOutputProvider extends AbstractOutputProvider {
      * @param string $output
      */    
     public function setOutput($output) {
-        
         $this->_output = $output;
-        
-        // Storing persistent opening
-        if ($this->persistent == true) {
-            self::$persistentBuffer[get_class($this).$this->binary.$this->movieFile] = $output;            
-        }
     }
 } 
 ?>
